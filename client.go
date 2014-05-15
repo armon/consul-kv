@@ -119,7 +119,7 @@ func (c *Client) getRecurse(key string, recurse bool, waitIndex uint64) (*KVMeta
 	meta := &KVMeta{}
 	index, err := strconv.ParseUint(resp.Header.Get("X-Consul-Index"), 10, 64)
 	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to parse X-Consul-Index: %v", err)
+		return nil, nil, fmt.Errorf("failed to parse X-Consul-Index: %v", err)
 	}
 	meta.ModifyIndex = index
 
@@ -127,7 +127,7 @@ func (c *Client) getRecurse(key string, recurse bool, waitIndex uint64) (*KVMeta
 	if resp.StatusCode == 404 {
 		return meta, nil, nil
 	} else if resp.StatusCode != 200 {
-		return nil, nil, fmt.Errorf("Unexpected response code: %d", resp.StatusCode)
+		return nil, nil, fmt.Errorf("unexpected response code: %d", resp.StatusCode)
 	}
 
 	// Decode the response
@@ -171,11 +171,11 @@ func (c *Client) putCAS(key string, value []byte, flags, index uint64, cas bool)
 		return false, err
 	}
 	if resp.StatusCode != 200 {
-		return false, fmt.Errorf("Unexpected response code: %d", resp.StatusCode)
+		return false, fmt.Errorf("unexpected response code: %d", resp.StatusCode)
 	}
 	var buf bytes.Buffer
 	if _, err := io.Copy(&buf, resp.Body); err != nil {
-		return false, fmt.Errorf("Failed to read response: %v", err)
+		return false, fmt.Errorf("failed to read response: %v", err)
 	}
 	res := strings.Contains(string(buf.Bytes()), "true")
 	return res, nil
@@ -208,7 +208,7 @@ func (c *Client) deleteRecurse(key string, recurse bool) error {
 		return err
 	}
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("Unexpected response code: %d", resp.StatusCode)
+		return fmt.Errorf("unexpected response code: %d", resp.StatusCode)
 	}
 	return nil
 
