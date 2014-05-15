@@ -22,9 +22,9 @@ type Config struct {
 	// Datacenter to use. If not provided, the default agent datacenter is used.
 	Datacenter string
 
-	// HttpClient is the client to use. Default will be
+	// HTTPClient is the client to use. Default will be
 	// used if not provided.
-	HttpClient *http.Client
+	HTTPClient *http.Client
 
 	// WaitTime limits how long a Watch will block. If not provided,
 	// the agent default values will be used.
@@ -65,7 +65,7 @@ func NewClient(config *Config) (*Client, error) {
 func DefaultConfig() *Config {
 	return &Config{
 		Address:    "127.0.0.1:8500",
-		HttpClient: http.DefaultClient,
+		HTTPClient: http.DefaultClient,
 	}
 }
 
@@ -110,7 +110,7 @@ func (c *Client) getRecurse(key string, recurse bool, waitIndex uint64) (*KVMeta
 		Method: "GET",
 		URL:    url,
 	}
-	resp, err := c.config.HttpClient.Do(&req)
+	resp, err := c.config.HTTPClient.Do(&req)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -166,7 +166,7 @@ func (c *Client) putCAS(key string, value []byte, flags, index uint64, cas bool)
 		Body:   ioutil.NopCloser(bytes.NewReader(value)),
 	}
 	req.ContentLength = int64(len(value))
-	resp, err := c.config.HttpClient.Do(&req)
+	resp, err := c.config.HTTPClient.Do(&req)
 	if err != nil {
 		return false, err
 	}
@@ -203,7 +203,7 @@ func (c *Client) deleteRecurse(key string, recurse bool) error {
 		Method: "DELETE",
 		URL:    url,
 	}
-	resp, err := c.config.HttpClient.Do(&req)
+	resp, err := c.config.HTTPClient.Do(&req)
 	if err != nil {
 		return err
 	}
