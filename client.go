@@ -84,7 +84,7 @@ func (c *Client) WatchGet(key string, modifyIndex uint64) (*KVMeta, *KVPair, err
 	return selectOne(c.getRecurse(key, false, modifyIndex))
 }
 
-// WatchGet is used to block and wait for a change on a prefix
+// WatchList is used to block and wait for a change on a prefix
 func (c *Client) WatchList(prefix string, modifyIndex uint64) (*KVMeta, KVPairs, error) {
 	return c.getRecurse(prefix, true, modifyIndex)
 }
