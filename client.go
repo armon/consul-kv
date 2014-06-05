@@ -114,6 +114,7 @@ func (c *Client) getRecurse(key string, recurse bool, waitIndex uint64) (*KVMeta
 	if err != nil {
 		return nil, nil, err
 	}
+	defer resp.Body.Close()
 
 	// Decode the KVMeta
 	meta := &KVMeta{}
@@ -170,6 +171,7 @@ func (c *Client) putCAS(key string, value []byte, flags, index uint64, cas bool)
 	if err != nil {
 		return false, err
 	}
+	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		return false, fmt.Errorf("unexpected response code: %d", resp.StatusCode)
 	}
@@ -207,6 +209,7 @@ func (c *Client) deleteRecurse(key string, recurse bool) error {
 	if err != nil {
 		return err
 	}
+	resp.Body.Close()
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("unexpected response code: %d", resp.StatusCode)
 	}
