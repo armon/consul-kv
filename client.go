@@ -221,7 +221,7 @@ func (c *Client) pathURL(key string) *url.URL {
 	url := &url.URL{
 		Scheme: "http",
 		Host:   c.config.Address,
-		Path:   "/v1/kv/" + key,
+		Path:   "/v1/kv/" + strings.TrimPrefix(key, "/"),
 	}
 	if c.config.Datacenter != "" {
 		query := url.Query()
