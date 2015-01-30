@@ -1,7 +1,8 @@
 consul-kv
 =========
 
-*DEPRECATED* Please use [consul-api](https://github.com/armon/consul-api) instead.
+*DEPRECATED* Please use [consul api package](https://github.com/hashicorp/consul/tree/master/api) instead.
+Godocs for that package [are here](http://godoc.org/github.com/hashicorp/consul/api).
 
 This package provides the `consulkv` package which is a Key/Value
 client for Consul. It supports all the commands as of Consul 0.1,
